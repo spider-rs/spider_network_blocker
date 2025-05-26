@@ -1,0 +1,31 @@
+[package]
+name = "spider_network_blocker"
+version = "0.0.7"
+authors = [
+    "j-mendez <jeff@spider.cloud>"
+]
+description = "Web crawler network blocking urls and patterns."
+repository = "https://github.com/spider-rs/spider_network_blocker"
+readme = "README.md"
+keywords = ["network", "firewall"]
+categories = ["web-programming", "command-line-utilities"]
+license = "MIT"
+documentation = "https://docs.rs/spider_network_blocker"
+edition = "2018"
+
+[dependencies]
+lazy_static = "1"
+hashbrown = { version = "0.15", optional = true }
+url = "2"
+serde = { version = "1", features = ["derive"] }
+phf = { version = "0.11", features = ["macros"] }
+
+[build-dependencies]
+phf = { version = "0.11", default-features = false }
+phf_codegen = "0.11"
+convert_case = "0.8"
+
+
+[features]
+default = ["hashbrown"]
+hashbrown = ["dep:hashbrown"]
