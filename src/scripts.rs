@@ -87,6 +87,8 @@ lazy_static::lazy_static! {
             "https://cdn.onetrust.com",
             "https://services.insurads.com/",
             "https://platform.iteratehq.com/loader.js",
+            "https://s.amazon-adsystem.com/",
+            "https://ts.amazon-adsystem.com/",
             "https://tracking.g2crowd.com/attribution_tracking/conversions/",
             "https://static.ads-twitter.com/uwt.js",
             "https://amplify.outbrain.com/cp/obtp.js",
@@ -94,6 +96,7 @@ lazy_static::lazy_static! {
             "https://js.hs-banner.com/v2/",
             "https://browser.sentry-cdn.com/",
             "https://wix-engage-visitors-prod-13.firebaseio.com/",
+            "https://c.amazon-adsystem.com/aax2/apstag.js",
             "https://www.clarity.ms/tag/",
             "https://cdn.callrail.com/companies/",
             "https://js.zi-scripts.com/zi-tag.js",
@@ -332,7 +335,7 @@ lazy_static::lazy_static! {
             "privacy-notice.js",
             ".ingest.sentry.io/api",
             // ignore amazon scripts for media
-            ".ssl-images-amazon.com/images/"
+            ".ssl-images-amazon.com/images/",
         ];
         for pattern in &patterns {
             trie.insert(pattern);

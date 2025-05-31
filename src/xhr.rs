@@ -98,6 +98,8 @@ lazy_static::lazy_static! {
             "https://prebid.adnxs.com/",
             "https://doh.cq0.co/resolve",
             "https://event.api.drift.com/track",
+            "https://aan.amazon.com/cem",
+            "https://unagi.amazon.com/1/events/com.amazon.csm.csa.prod",
             "https://api.marker.io/widget/ping",
             "https://targeting.api.drift.com/targeting/evaluate_with_log",
             "https://targeting.api.drift.com/impressions/widget",
