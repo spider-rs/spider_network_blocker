@@ -1,2 +1,6 @@
 ?pageViewLogging=1
 .amazon-adsystem.com/
+https://unagi-eu.amazon.com/1/events/com.amazon.csm.nexusclient.prod
+https://unagi-na.amazon.com/1/events/com.amazon.Vowels.ClientMetrics
+https://unagi-na.amazon.com/1/events/com.amazon.Vowels.PageWeightMetrics
+https://unagi-eu.amazon.com/1/events/com.amazon.eel.SponsoredProductsEventTracking.prod
