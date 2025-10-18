@@ -103,6 +103,7 @@ lazy_static::lazy_static! {
             "https://vsanalytics.visualsoft.co.uk/com.snowplowanalytics.snowplow/tp2",
             "https://a.klaviyo.com/onsite/track-analytics",
             "https://hit.salesfire.co.uk/config?",
+            "https://eu.i.posthog.com/e/",
             "https://ib.adnxs.com/",
             "https://secure.adnxs.com/",
             "https://dc.schibsted.io/api/v1/track/",

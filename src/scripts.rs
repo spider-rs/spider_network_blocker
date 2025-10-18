@@ -217,6 +217,7 @@ lazy_static::lazy_static! {
             "https://script.dotmetrics.net/",
             "https://delivery.consentmanager.net/delivery/",
             "https://mc.yandex.ru/metrika/tag.js",
+            "https://cdn.debugbear.com/",
             "https://stats.wp.com/e-",
             "https://public.servenobid.com/partner/",
             "https://sb.scorecardresearch.com/beacon.js",
