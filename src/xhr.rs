@@ -119,6 +119,9 @@ lazy_static::lazy_static! {
             "https://cdn.segment.",
             ".wixapps.net/api/v1/bulklog",
             "https://error-analytics-sessions-production.shopifysvc.com/",
+            "https://cloudflare.com/cdn-cgi/trace",
+            "https://distillery.wistia.com/x",
+            "https://pipedream.wistia.com/mput?topic=metrics",
             "https://static-forms.",
             "https://nhst.tt.omtrdc.net/rest/v1/delivery",
             // video embeddings
@@ -148,6 +151,7 @@ lazy_static::lazy_static! {
             ".onetrust.",
             "https://logs.",
             "/track.php",
+            "/cookieconsentpub/v1/geo/location",
             "/api/v1/bulklog",
             "cookieconsentpub",
             "cookie-law-info",
