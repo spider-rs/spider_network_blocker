@@ -190,19 +190,34 @@ fn generate_blockers(blockers_dir: &Path, pattern_dir: &str) {
                 // Generate block_scripts
                 let scripts_trie_name = format_ident(&format!("{}_scripts", domain_name));
                 writeln!(file, "pub fn block_scripts(url: &str) -> bool {{").unwrap();
-                writeln!(file, "    crate::intercept_manager::url_ignore_trie::{}_TRIE.contains_prefix(url)", scripts_trie_name.to_uppercase()).unwrap();
+                writeln!(
+                    file,
+                    "    crate::intercept_manager::url_ignore_trie::{}_TRIE.contains_prefix(url)",
+                    scripts_trie_name.to_uppercase()
+                )
+                .unwrap();
                 writeln!(file, "}}\n").unwrap();
 
                 // Generate block_styles
                 let styles_trie_name = format_ident(&format!("{}_styles", domain_name));
                 writeln!(file, "pub fn block_styles(url: &str) -> bool {{").unwrap();
-                writeln!(file, "    crate::intercept_manager::url_ignore_trie::{}_TRIE.contains_prefix(url)", styles_trie_name.to_uppercase()).unwrap();
+                writeln!(
+                    file,
+                    "    crate::intercept_manager::url_ignore_trie::{}_TRIE.contains_prefix(url)",
+                    styles_trie_name.to_uppercase()
+                )
+                .unwrap();
                 writeln!(file, "}}\n").unwrap();
 
                 // Generate block_xhr
                 let xhr_trie_name = format_ident(&format!("{}_xhr", domain_name));
                 writeln!(file, "pub fn block_xhr(url: &str) -> bool {{").unwrap();
-                writeln!(file, "    crate::intercept_manager::url_ignore_trie::{}_TRIE.contains_prefix(url)", xhr_trie_name.to_uppercase()).unwrap();
+                writeln!(
+                    file,
+                    "    crate::intercept_manager::url_ignore_trie::{}_TRIE.contains_prefix(url)",
+                    xhr_trie_name.to_uppercase()
+                )
+                .unwrap();
                 writeln!(file, "}}\n").unwrap();
             }
         }

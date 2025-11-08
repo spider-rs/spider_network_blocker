@@ -1,4 +1,3 @@
-
 /// Trie node for ignore.
 #[derive(Default, Debug)]
 pub struct TrieNode {

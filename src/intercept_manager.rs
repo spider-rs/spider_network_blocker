@@ -1,6 +1,7 @@
 include!(concat!(env!("OUT_DIR"), "/domain_map.rs"));
 
 impl NetworkInterceptManager {
+    /// Establish a new tracker based on the domain.
     pub fn new(url: &Option<Box<url::Url>>) -> NetworkInterceptManager {
         if let Some(parsed_url) = url {
             if let Some(domain) = parsed_url.domain() {
