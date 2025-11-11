@@ -130,6 +130,10 @@ lazy_static::lazy_static! {
             "https://fg8vvsvnieiv3ej16jby.litix.io/",
             "https://static-forms.",
             "https://nhst.tt.omtrdc.net/rest/v1/delivery",
+            "https://www.clarity.ms/",
+            "https://error-analytics-sessions-production.shopifysvc.com/observeonly",
+            "https://www.paypal.com/xoplatform/logger/api/logger",
+            "https://www.paypal.com/credit-presentment/glog",
             // video embeddings
             "https://video.squarespace-cdn.com/content/",
             "https://bes.gcp.data.bigcommerce.com/nobot",

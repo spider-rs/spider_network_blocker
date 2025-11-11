@@ -51,7 +51,6 @@ lazy_static::lazy_static! {
             "https://px.ads.linkedin.com",
             "https://cdn.sift.com/s.js",
             "https://connect.facebook.net",
-            "https://static-tracking.klaviyo.com/onsite/js/",
             "https://tags.tiqcdn.com",
             "https://tr.snapchat.com",
             "https://ads.twitter.com",
@@ -98,7 +97,6 @@ lazy_static::lazy_static! {
             "https://js.hsadspixel.net/fb.js",
             "https://js.hs-banner.com/v2/",
             "https://www.dwin1.com/2134.js",
-            "https://static-tracking.klaviyo.com/onsite/js/",
             "https://browser.sentry-cdn.com/",
             "https://wix-engage-visitors-prod-13.firebaseio.com/",
             "https://c.amazon-adsystem.com/aax2/apstag.js",
@@ -109,7 +107,6 @@ lazy_static::lazy_static! {
             "https://img1.wsimg.com/signals/js/clients/scc-c2/scc-c2.min.js",
             "https://beacon.riskified.com/",
             "https://connect.facebook.net/en_US/fbevents.js",
-            "https://analytics.tiktok.com/i18n/pixel/events.js",
             "https://cdn.shopify.com/shopifycloud/boomerang/shopify-boomerang-1.0.0.min.js",
             "https://cdn-ukwest.onetrust.com/scripttemplates/otSDKStub.js",
             "https://tag.marinsm.com/serve/",
@@ -237,7 +234,6 @@ lazy_static::lazy_static! {
             "https://sb.scorecardresearch.com/beacon.js",
             "https://cdn.pdst.fm/ping.min.js",
             "https://www.clarity.ms/tag/shopify/",
-            "https://static-tracking.klaviyo.com/onsite/js/",
             "https://static.klaviyo.com/onsite/js/",
             "https://a.klaviyo.com/media/js/",
             "https://cdn.intelligems.io/esm/",
@@ -293,6 +289,7 @@ lazy_static::lazy_static! {
             "cookieconsent.js",
             "adsbygoogle.js",
             "otBannerSdk.js",
+            "analytics.js", // we may want this optional as some views may be called analytics.js
             "https://ads.",
             "http://ads.",
             ".pubmatic.com/AdServer/",
@@ -345,6 +342,8 @@ lazy_static::lazy_static! {
             // vercel live
             "https://vercel.live/api/",
 
+            // Shop app pay analytics iframe.
+            "https://shop.app/pay/hop?analytics_trace_id",
             // extra CDN scripts
             "https://cdn.readme.io/public/",
             // font awesome
