@@ -27,6 +27,7 @@ lazy_static::lazy_static! {
             "https://googleads.g.doubleclick.net/pagead/id",
             "https://js.monitor.azure.com/scripts",
             "https://securepubads.g.doubleclick.net",
+            "https://analytics.google.com/g/collect",
             "https://pixel-config.reddit.com/pixels",
             // amazon product feedback
             "https://www.amazon.com/af/feedback-link?",
@@ -40,6 +41,7 @@ lazy_static::lazy_static! {
             "https://s.yimg.com/wi",
             "https://disney.my.sentry.io/api/",
             "https://www.redditstatic.com/ads",
+            "https://events.launchdarkly.com/events/",
             "https://logx.optimizely.com/v1/events",
             "https://www.google-analytics.com/g/collect",
             "https://api-2-0.spot.im/v1.0.0/",
