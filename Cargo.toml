@@ -1,6 +1,6 @@
 [package]
 name = "spider_network_blocker"
-version = "0.0.40"
+version = "0.0.41"
 authors = [
     "j-mendez <jeff@spider.cloud>"
 ]
