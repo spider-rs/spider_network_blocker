@@ -182,6 +182,7 @@ lazy_static::lazy_static! {
             "https://cdn.noibu.com/",
             "https://static.cloudflareinsights.com/beacon.min.js/",
             "https://hm.baidu.com/",
+            "https://storage.googleapis.com/lr-marketing-js/lr-web-analytics/",
             "https://unpkg.zhimg.com/@efe/zhad-tracker",
             "https://tracking.g2crowd.com/attribution_tracking/",
             "https://snap.licdn.com/",
@@ -368,6 +369,8 @@ lazy_static::lazy_static! {
             "https://gum.criteo.com/syncframe?",
             "https://js.datadome.co/",
             "https://www.googletagmanager.com/",
+            "setup-intercom-monitoring.js",
+            "setup-sentry.js",
             // "https://www.youtube.com/s/player/", // Youtube player not needed usually since iframe_api is used mainly
             // vercel live
             "https://vercel.live/api/",
@@ -483,10 +486,18 @@ lazy_static::lazy_static! {
             "track.js",
             "ads.js",
             "analytics.js",
+
+            // minified variants (min.js handling)
+            "privacy-notice.min.js",
+            "tracking.min.js",
+            "track.min.js",
+            "ads.min.js",
+            "analytics.min.js",
+
             "otSDKStub.js",
             "otBannerSdk.js",
             "_vercel/insights/script.js",
-            "analytics.",
+            "analytics.", // keep this if you rely on prefix-y analytics.* patterns
         ];
         for pattern in &patterns {
             trie.insert(pattern);
