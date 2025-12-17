@@ -39,6 +39,7 @@ lazy_static::lazy_static! {
             "https://collect.tealiumiq.com/",
             "https://adobedc.demdex.net/",
             "https://cdn.acsbapp.com/config/",
+            "https://api-iam.intercom.io/messenger/web/metrics",
             "https://s.yimg.com/wi",
             "https://collector-pxj770cp7y.px-cloud.net/api/v2/collector",
             "https://disney.my.sentry.io/api/",
