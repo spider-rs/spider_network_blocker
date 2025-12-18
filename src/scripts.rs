@@ -180,6 +180,7 @@ lazy_static::lazy_static! {
             "https://x.clearbitjs.com/v2/",
             "https://api.clerk.io/v2/log/",
             "https://cdn.noibu.com/",
+            "https://us1.discourse-cdn.com/cursor1/assets/plugins/discourse-adplugin",
             "https://static.cloudflareinsights.com/beacon.min.js/",
             "https://hm.baidu.com/",
             "https://storage.googleapis.com/lr-marketing-js/lr-web-analytics/",
