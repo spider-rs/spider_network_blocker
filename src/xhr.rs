@@ -110,6 +110,8 @@ lazy_static::lazy_static! {
             "https://doh.cq0.co/resolve",
             "https://event.api.drift.com/track",
             "https://aan.amazon.com/cem",
+            "https://waa-pa.clients6.google.com/$rpc/google.internal.waa.v1.Waa/Ping",
+            "https://waa-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/Ping",
             "https://unagi.amazon.com/1/events/com.amazon.csm.csa.prod",
             "https://vsanalytics.visualsoft.co.uk/com.snowplowanalytics.snowplow/tp2",
             "https://a.klaviyo.com/onsite/track-analytics",

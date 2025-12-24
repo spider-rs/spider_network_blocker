@@ -372,6 +372,7 @@ lazy_static::lazy_static! {
             "https://www.googletagmanager.com/",
             "setup-intercom-monitoring.js",
             "setup-sentry.js",
+            "cast_sender.js",
             // "https://www.youtube.com/s/player/", // Youtube player not needed usually since iframe_api is used mainly
             // vercel live
             "https://vercel.live/api/",
