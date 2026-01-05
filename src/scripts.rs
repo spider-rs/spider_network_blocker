@@ -225,6 +225,7 @@ lazy_static::lazy_static! {
             "https://img1.wsimg.com/",
             "https://invitejs.trustpilot.com/tp.min.js",
             "https://ads.pubmatic.com/AdServer/js/",
+            "https://dev.visualwebsiteoptimizer.com/",
             "https://widgets.outbrain.com/nanoWidget/externals/obPixelFrame/obPixelFrame.js",
             "https://widgets.outbrain.com/external/externals/intentiq.js",
             "https://applets.ebxcdn.com/ebx.js",
