@@ -222,6 +222,7 @@ lazy_static::lazy_static! {
             "https://cdn.cookielaw.org/scripttemplates/",
             "https://s2.go-mpulse.net/",
             "https://pbs.yahoo.com/",
+            "https://cdn.intergient.com/",
             "https://img1.wsimg.com/",
             "https://invitejs.trustpilot.com/tp.min.js",
             "https://ads.pubmatic.com/AdServer/js/",
