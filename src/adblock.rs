@@ -25,6 +25,7 @@ lazy_static::lazy_static! {
             "otBannerSdk.js",
             // Analytics scripts
             "analytics.js",
+            "analytics.min.js",
             "ob.cityrobotflower.com",
             "siteintercept.qualtrics.com",
             "iesnare.com",

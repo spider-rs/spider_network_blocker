@@ -219,7 +219,6 @@ lazy_static::lazy_static! {
             "https://cdn-widgetsrepository.yotpo.com/",
             "https://a.klaviyo.com/onsite/track-analytics?",
             "https://klaviyo.com/onsite/track-analytics?",
-            "https://cdn.cookielaw.org/scripttemplates/",
             "https://s2.go-mpulse.net/",
             "https://pbs.yahoo.com/",
             "https://cdn.intergient.com/",
@@ -372,6 +371,7 @@ lazy_static::lazy_static! {
             "https://gum.criteo.com/syncframe?",
             "https://js.datadome.co/",
             "https://www.googletagmanager.com/",
+            "https://secure.livechatinc.com/customer/action/open_chat", // chat
             "setup-intercom-monitoring.js",
             "setup-sentry.js",
             "cast_sender.js",
