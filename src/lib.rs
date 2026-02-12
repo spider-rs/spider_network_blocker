@@ -1,4 +1,3 @@
-#![recursion_limit = "256"]
 /// Adblock patterns.
 pub mod adblock;
 /// interception manager

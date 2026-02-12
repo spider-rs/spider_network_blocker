@@ -1,6 +1,6 @@
 [package]
 name = "spider_network_blocker"
-version = "0.0.55"
+version = "0.0.56"
 authors = [
     "j-mendez <jeff@spider.cloud>"
 ]
@@ -11,21 +11,28 @@ keywords = ["network", "firewall"]
 categories = ["web-programming", "command-line-utilities"]
 license = "MIT"
 documentation = "https://docs.rs/spider_network_blocker"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
-lazy_static = "1"
 hashbrown = { version = "0.15", optional = true }
 url = "2"
 serde = { version = "1", features = ["derive"] }
 phf = { version = "0.11", features = ["macros"] }
+adblock = { version = "0.12", optional = true, default-features = false, features = ["embedded-domain-resolver", "full-regex-handling"] }
 
 [build-dependencies]
 phf = { version = "0.11", default-features = false }
 phf_codegen = "0.11"
 convert_case = "0.8"
 
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
 
 [features]
 default = ["hashbrown"]
 hashbrown = ["dep:hashbrown"]
+adblock = ["dep:adblock"]
+
+[[bench]]
+name = "benchmarks"
+harness = false

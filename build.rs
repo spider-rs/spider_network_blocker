@@ -119,7 +119,7 @@ fn generate_url_ignore_tries(url_trie_path: &Path, pattern_dir: &str) {
     let mut file = BufWriter::new(File::create(url_trie_path).unwrap());
 
     writeln!(file, "use crate::trie::Trie;").unwrap();
-    writeln!(file, "lazy_static::lazy_static! {{").unwrap();
+    writeln!(file, "use std::sync::LazyLock;").unwrap();
 
     for category in &["scripts", "xhr", "styles"] {
         if let Ok(domain_entries) = fs::read_dir(pattern_dir) {
@@ -135,7 +135,7 @@ fn generate_url_ignore_tries(url_trie_path: &Path, pattern_dir: &str) {
                         let trie_name = format_ident(&format!("{}_{}", domain_name, category));
                         writeln!(
                             file,
-                            "pub static ref {}_TRIE: Trie = {{",
+                            "pub static {}_TRIE: LazyLock<Trie> = LazyLock::new(|| {{",
                             trie_name.to_uppercase()
                         )
                         .unwrap();
@@ -165,14 +165,12 @@ fn generate_url_ignore_tries(url_trie_path: &Path, pattern_dir: &str) {
                         }
 
                         writeln!(file, "trie").unwrap();
-                        writeln!(file, "}};").unwrap();
+                        writeln!(file, "}});").unwrap();
                     }
                 }
             }
         }
     }
-
-    writeln!(file, "}}").unwrap();
 }
 
 fn generate_blockers(blockers_dir: &Path, pattern_dir: &str) {
