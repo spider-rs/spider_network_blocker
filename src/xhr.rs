@@ -55,6 +55,7 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://translate.googleapis.com/element/log",
         "https://sentry.io/api/",
         "https://api2.branch.io/",
+        "https://api.id5-sync.com/analytics",
         "https://i.clean.gg/",
         "https://prebid.media.net/",
         "https://buy.tinypass.com/",
@@ -144,6 +145,10 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://error-analytics-sessions-production.shopifysvc.com/observeonly",
         "https://www.paypal.com/xoplatform/logger/api/logger",
         "https://www.paypal.com/credit-presentment/glog",
+        "https://prd.jwpltx.com/v1/jwplayer6/ping.gif",
+        "https://direct.adsrvr.org/bid/bidder/dotdash",
+        "https://prebid-server.rubiconproject.com/openrtb2/auction",
+        "https://pixel.adsafeprotected.com/services/pub?",
         // video embeddings
         "https://video.squarespace-cdn.com/content/",
         "https://bes.gcp.data.bigcommerce.com/nobot",
