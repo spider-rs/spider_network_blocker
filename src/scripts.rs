@@ -274,6 +274,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "/eu_cookie_compliance/js/eu_cookie_compliance.min.js",
         "/privacy-banner/storefront-banner.js",
         "/consent-tracking-api/v0.1/consent-tracking-api.js",
+        "/simpleads/impression",
         "go-mpulse.net/boomerang",
         ".siteintercept.qualtrics.com",
         ".sharethis.com",

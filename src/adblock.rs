@@ -34,6 +34,7 @@ pub static ADBLOCK_PATTERNS: LazyLock<Vec<&'static str>> = LazyLock::new(|| {
         "googletagmanager.com",
         "forter.com",
         "/first.iovation.com",
+        "/simpleads/impression",
         // Specific ad and tracking domains
         "googlesyndication.com",
         ".googlesyndication.com/safeframe/",
