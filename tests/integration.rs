@@ -1,8 +1,8 @@
 use spider_network_blocker::adblock::ADBLOCK_PATTERNS;
 use spider_network_blocker::intercept_manager::NetworkInterceptManager;
 use spider_network_blocker::scripts::{
-    URL_IGNORE_EMBEDED_TRIE, URL_IGNORE_SCRIPT_BASE_PATHS, URL_IGNORE_SCRIPT_STYLES_PATHS,
-    URL_IGNORE_TRIE, URL_IGNORE_TRIE_PATHS,
+    URL_IGNORE_CSS, URL_IGNORE_EMBEDED_TRIE, URL_IGNORE_SCRIPT_BASE_PATHS,
+    URL_IGNORE_SCRIPT_STYLES_PATHS, URL_IGNORE_TRIE, URL_IGNORE_TRIE_PATHS,
 };
 use spider_network_blocker::xhr::{URL_IGNORE_XHR_MEDIA_TRIE, URL_IGNORE_XHR_TRIE};
 
@@ -150,6 +150,14 @@ fn test_trie_paths_standalone() {
     assert!(URL_IGNORE_TRIE_PATHS.contains_prefix("_vercel/insights/script.js"));
     assert!(!URL_IGNORE_TRIE_PATHS.contains_prefix("main.js"));
     assert!(!URL_IGNORE_TRIE_PATHS.contains_prefix("app.bundle.js"));
+}
+
+// ── CSS blocking ─────────────────────────────────────────────────────
+
+#[test]
+fn test_css_blocking() {
+    assert!(URL_IGNORE_CSS.contains_prefix("https://www.youtube.com/generate_204"));
+    assert!(!URL_IGNORE_CSS.contains_prefix("https://www.youtube.com/watch?v=abc"));
 }
 
 // ── ADBLOCK_PATTERNS integrity ───────────────────────────────────────

@@ -481,6 +481,22 @@ pub static URL_IGNORE_SCRIPT_STYLES_PATHS: LazyLock<Trie> = LazyLock::new(|| {
     trie
 });
 
+/// Ignore list of CSS resources.
+pub static URL_IGNORE_CSS: LazyLock<Trie> = LazyLock::new(|| {
+    let mut trie = Trie::new();
+    let patterns = [
+        "https://www.youtube.com/generate_",
+        "https://www.google.com/generate_",
+        "https://fonts.googleapis.com/icon",
+        "https://www.youtube.com/sw.js_data",
+        "https://play.google.com/log",
+    ];
+    for pattern in &patterns {
+        trie.insert(pattern);
+    }
+    trie
+});
+
 /// Ignore list of scripts paths.
 pub static URL_IGNORE_TRIE_PATHS: LazyLock<Trie> = LazyLock::new(|| {
     let mut trie = Trie::new();
@@ -630,6 +646,40 @@ mod tests {
         for case in negative_cases {
             assert!(
                 !URL_IGNORE_SCRIPT_STYLES_PATHS.contains_prefix(case),
+                "Trie should not contain: {}",
+                case
+            );
+        }
+    }
+
+    #[test]
+    fn test_url_ignore_css_contains() {
+        let positive_cases = vec![
+            "https://www.youtube.com/generate_204",
+            "https://www.youtube.com/generate_something",
+            "https://www.google.com/generate_204",
+            "https://fonts.googleapis.com/icon?family=Material+Icons",
+            "https://www.youtube.com/sw.js_data",
+            "https://play.google.com/log?format=json",
+        ];
+
+        let negative_cases = vec![
+            "https://www.youtube.com/watch?v=abc",
+            "https://www.example.com/generate_",
+            "https://fonts.googleapis.com/css2?family=Roboto",
+        ];
+
+        for case in positive_cases {
+            assert!(
+                URL_IGNORE_CSS.contains_prefix(case),
+                "Trie should contain: {}",
+                case
+            );
+        }
+
+        for case in negative_cases {
+            assert!(
+                !URL_IGNORE_CSS.contains_prefix(case),
                 "Trie should not contain: {}",
                 case
             );
