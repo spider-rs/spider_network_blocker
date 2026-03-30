@@ -324,6 +324,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "analytics.js", // we may want this optional as some views may be called analytics.js
         "https://ads.",
         "http://ads.",
+        "https://ads-static.",
         ".pubmatic.com/AdServer/",
         "https://tracking.",
         "http://tracking.",
