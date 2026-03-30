@@ -91,6 +91,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://cdn.onetrust.com",
         "https://services.insurads.com/",
         "https://platform.iteratehq.com/loader.js",
+        "https://privacy.condenastdigital.com/",
         "https://s.amazon-adsystem.com/",
         "https://ts.amazon-adsystem.com/",
         "https://tracking.g2crowd.com/attribution_tracking/conversions/",
