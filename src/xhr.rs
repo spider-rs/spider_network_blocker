@@ -162,6 +162,7 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://c.go-mpulse.net/",
         "https://prodregistryv2.org/v1/",
         "https://dpm.demdex.net/",
+        "https://router.parklogic.com/",
         "https://monorail-edge.shopifysvc.com/unstable/produce_batch",
         "https://monorail-edge.shopifysvc.com/v1/produce",
         "https://cloudflareinsights.com/cdn-cgi/rum",
