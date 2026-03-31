@@ -91,10 +91,15 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://cdn.onetrust.com",
         "https://services.insurads.com/",
         "https://platform.iteratehq.com/loader.js",
+        "https://cdn.complyauto.com/cookiebanner/banner.js",
+        "https://sdtagging.azureedge.net/scripts/sd.js?containerId=GMUS",
+        "https://ref.dealerinspire.com/",
         "https://privacy.condenastdigital.com/",
+        "https://cas-assets.edmunds.com/partner-analytics/",
         "https://s.amazon-adsystem.com/",
         "https://ts.amazon-adsystem.com/",
         "https://tracking.g2crowd.com/attribution_tracking/conversions/",
+        "https://wsmcdn.audioeye.com/aem.js",
         "https://static.criteo.net/",
         "https://dynamic.criteo.com/",
         "https://tags.creativecdn.com/",
@@ -346,23 +351,23 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
 pub static URL_IGNORE_EMBEDED_TRIE: LazyLock<Trie> = LazyLock::new(|| {
     let mut trie = Trie::new();
     let patterns = [
-        "https://www.youtube.com/embed/",      // YouTube video embeds
-        "https://www.google.com/maps/embed?",  // Google Maps embeds
-        "https://maps.google.com", // Google maps iframe.
-        "https://player.vimeo.com/video/",     // Vimeo video embeds
+        "https://www.youtube.com/embed/",         // YouTube video embeds
+        "https://www.google.com/maps/embed?",     // Google Maps embeds
+        "https://maps.google.com",                // Google maps iframe.
+        "https://player.vimeo.com/video/",        // Vimeo video embeds
         "https://player.vimeo.com/api/player.js", // Vimeo video embeds
-        "https://open.spotify.com/embed/",     // Spotify music embeds
-        "https://w.soundcloud.com/player/",    // SoundCloud embeds
-        "https://platform.twitter.com/embed/", // Twitter embedded tweets
-        "https://www.instagram.com/embed.js",  // Instagram embeds
-        "https://www.facebook.com/plugins/",   // Facebook embeds (like posts and videos)
-        "https://cdn.embedly.com/widgets/",    // Embedly embeds
-        "https://player.twitch.tv/",           // Twitch video player embeds
-        "https://maps.googleapis.com/maps/", // Google map embeds
-        "https://www.youtube.com/player_api", // Youtube player.
-        "https://consentcdn.cookiebot.com", // Cookie bot
-        "https://www.youtube.com/iframe_api", // Youtube iframes.
-        "https://f.vimeocdn.com", // Vimeo EMBEDDINGS
+        "https://open.spotify.com/embed/",        // Spotify music embeds
+        "https://w.soundcloud.com/player/",       // SoundCloud embeds
+        "https://platform.twitter.com/embed/",    // Twitter embedded tweets
+        "https://www.instagram.com/embed.js",     // Instagram embeds
+        "https://www.facebook.com/plugins/",      // Facebook embeds (like posts and videos)
+        "https://cdn.embedly.com/widgets/",       // Embedly embeds
+        "https://player.twitch.tv/",              // Twitch video player embeds
+        "https://maps.googleapis.com/maps/",      // Google map embeds
+        "https://www.youtube.com/player_api",     // Youtube player.
+        "https://consentcdn.cookiebot.com",       // Cookie bot
+        "https://www.youtube.com/iframe_api",     // Youtube iframes.
+        "https://f.vimeocdn.com",                 // Vimeo EMBEDDINGS
         "https://i.vimeocdn.com/",
         "https://image2.pubmatic.com/AdServer/",
         "https://ads.pubmatic.com/AdServer/js/",
@@ -384,7 +389,6 @@ pub static URL_IGNORE_EMBEDED_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         // "https://www.youtube.com/s/player/", // Youtube player not needed usually since iframe_api is used mainly
         // vercel live
         "https://vercel.live/api/",
-
         // Shop app pay analytics iframe.
         "https://shop.app/pay/hop?analytics_trace_id",
         // extra CDN scripts
@@ -394,7 +398,6 @@ pub static URL_IGNORE_EMBEDED_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         // insight tracker
         "https://insight.adsrvr.org/track/",
         "http://www.google-analytics.com/ga.js",
-
         ".optimizely.com/client_storage/",
         "cxense.com/",
         // snapchat tracker
@@ -478,7 +481,7 @@ pub static URL_IGNORE_SCRIPT_STYLES_PATHS: LazyLock<Trie> = LazyLock::new(|| {
         "wp-content/plugins/wp-rocket/assets/js/lazyload/",
         "wp-content/plugins/w3-total-cache/",
         "wp-content/js/bilmur.min.js",
-        "npm/bootstrap@"
+        "npm/bootstrap@",
     ];
     for pattern in &patterns {
         trie.insert(pattern);
@@ -512,14 +515,12 @@ pub static URL_IGNORE_TRIE_PATHS: LazyLock<Trie> = LazyLock::new(|| {
         "track.js",
         "ads.js",
         "analytics.js",
-
         // minified variants (min.js handling)
         "privacy-notice.min.js",
         "tracking.min.js",
         "track.min.js",
         "ads.min.js",
         "analytics.min.js",
-
         "otSDKStub.js",
         "otBannerSdk.js",
         "_vercel/insights/script.js",

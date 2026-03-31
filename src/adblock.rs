@@ -58,11 +58,9 @@ pub mod engine {
 
     impl FilterListUrls {
         /// EasyList — primary ad-blocking filter list.
-        pub const EASYLIST: &'static str =
-            "https://easylist.to/easylist/easylist.txt";
+        pub const EASYLIST: &'static str = "https://easylist.to/easylist/easylist.txt";
         /// EasyPrivacy — privacy/tracking filter list.
-        pub const EASYPRIVACY: &'static str =
-            "https://easylist.to/easylist/easyprivacy.txt";
+        pub const EASYPRIVACY: &'static str = "https://easylist.to/easylist/easyprivacy.txt";
     }
 
     /// Wrapper around Brave's `adblock::Engine` with an ergonomic API.

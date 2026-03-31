@@ -26,7 +26,9 @@ fn test_e2e_script_blocking_allows_legitimate() {
     // Google Fonts should NOT be blocked
     assert!(!URL_IGNORE_TRIE.contains_prefix("https://fonts.googleapis.com/css2?family=Roboto"));
     // CDN content should NOT be blocked
-    assert!(!URL_IGNORE_TRIE.contains_prefix("https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"));
+    assert!(
+        !URL_IGNORE_TRIE.contains_prefix("https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js")
+    );
 }
 
 #[test]
@@ -70,10 +72,22 @@ fn test_e2e_xhr_media_trie() {
 #[test]
 fn test_manager_routing_known_domains() {
     let cases = vec![
-        ("https://www.amazon.com/dp/B08N5WRWNW", NetworkInterceptManager::Amazon),
-        ("https://www.reddit.com/r/rust", NetworkInterceptManager::Reddit),
-        ("https://www.nytimes.com/section/world", NetworkInterceptManager::Nytimes),
-        ("https://www.facebook.com/user", NetworkInterceptManager::Facebook),
+        (
+            "https://www.amazon.com/dp/B08N5WRWNW",
+            NetworkInterceptManager::Amazon,
+        ),
+        (
+            "https://www.reddit.com/r/rust",
+            NetworkInterceptManager::Reddit,
+        ),
+        (
+            "https://www.nytimes.com/section/world",
+            NetworkInterceptManager::Nytimes,
+        ),
+        (
+            "https://www.facebook.com/user",
+            NetworkInterceptManager::Facebook,
+        ),
     ];
 
     for (url, expected) in cases {
@@ -128,16 +142,24 @@ fn test_suffix_pattern_matching() {
 
 #[test]
 fn test_wp_plugin_blocking() {
-    assert!(URL_IGNORE_SCRIPT_BASE_PATHS.contains_prefix("wp-content/plugins/cookie-law-info/frontend.js"));
-    assert!(URL_IGNORE_SCRIPT_BASE_PATHS.contains_prefix("wp-content/plugins/borlabs-cookie/cookie.js"));
-    assert!(!URL_IGNORE_SCRIPT_BASE_PATHS.contains_prefix("wp-content/plugins/woocommerce/assets/main.js"));
+    assert!(URL_IGNORE_SCRIPT_BASE_PATHS
+        .contains_prefix("wp-content/plugins/cookie-law-info/frontend.js"));
+    assert!(
+        URL_IGNORE_SCRIPT_BASE_PATHS.contains_prefix("wp-content/plugins/borlabs-cookie/cookie.js")
+    );
+    assert!(!URL_IGNORE_SCRIPT_BASE_PATHS
+        .contains_prefix("wp-content/plugins/woocommerce/assets/main.js"));
 }
 
 #[test]
 fn test_wp_theme_and_style_blocking() {
-    assert!(URL_IGNORE_SCRIPT_STYLES_PATHS.contains_prefix("wp-content/themes/twentytwentyfour/style.css"));
-    assert!(URL_IGNORE_SCRIPT_STYLES_PATHS.contains_prefix("wp-content/plugins/contact-form-7/frontend.js"));
-    assert!(!URL_IGNORE_SCRIPT_STYLES_PATHS.contains_prefix("wp-content/plugins/woocommerce/main.js"));
+    assert!(URL_IGNORE_SCRIPT_STYLES_PATHS
+        .contains_prefix("wp-content/themes/twentytwentyfour/style.css"));
+    assert!(URL_IGNORE_SCRIPT_STYLES_PATHS
+        .contains_prefix("wp-content/plugins/contact-form-7/frontend.js"));
+    assert!(
+        !URL_IGNORE_SCRIPT_STYLES_PATHS.contains_prefix("wp-content/plugins/woocommerce/main.js")
+    );
 }
 
 #[test]
@@ -164,8 +186,15 @@ fn test_css_blocking() {
 
 #[test]
 fn test_adblock_patterns_not_empty() {
-    assert!(!ADBLOCK_PATTERNS.is_empty(), "ADBLOCK_PATTERNS should not be empty");
-    assert!(ADBLOCK_PATTERNS.len() > 30, "Expected 30+ patterns, got {}", ADBLOCK_PATTERNS.len());
+    assert!(
+        !ADBLOCK_PATTERNS.is_empty(),
+        "ADBLOCK_PATTERNS should not be empty"
+    );
+    assert!(
+        ADBLOCK_PATTERNS.len() > 30,
+        "Expected 30+ patterns, got {}",
+        ADBLOCK_PATTERNS.len()
+    );
 }
 
 #[test]
@@ -183,7 +212,10 @@ fn test_adblock_patterns_contain_expected() {
 #[test]
 fn test_adblock_patterns_no_empty_strings() {
     for pattern in ADBLOCK_PATTERNS.iter() {
-        assert!(!pattern.is_empty(), "ADBLOCK_PATTERNS should not contain empty strings");
+        assert!(
+            !pattern.is_empty(),
+            "ADBLOCK_PATTERNS should not contain empty strings"
+        );
         assert!(pattern.len() > 1, "Pattern too short: {}", pattern);
     }
 }
@@ -222,10 +254,7 @@ mod adblock_engine_tests {
 
     #[test]
     fn test_engine_blocking_xhr() {
-        let rules = vec![
-            "||doubleclick.net^",
-            "||analytics.google.com^",
-        ];
+        let rules = vec!["||doubleclick.net^", "||analytics.google.com^"];
         let engine = AdblockEngine::from_rules(rules, false);
 
         assert!(engine.should_block(
@@ -237,17 +266,10 @@ mod adblock_engine_tests {
 
     #[test]
     fn test_engine_allows_legitimate_urls() {
-        let rules = vec![
-            "||googletagmanager.com^",
-            "||doubleclick.net^",
-        ];
+        let rules = vec!["||googletagmanager.com^", "||doubleclick.net^"];
         let engine = AdblockEngine::from_rules(rules, false);
 
-        assert!(!engine.should_block(
-            "https://js.stripe.com/v3/",
-            "https://example.com",
-            "script"
-        ));
+        assert!(!engine.should_block("https://js.stripe.com/v3/", "https://example.com", "script"));
         assert!(!engine.should_block(
             "https://fonts.googleapis.com/css2?family=Roboto",
             "https://example.com",
@@ -265,10 +287,13 @@ mod adblock_engine_tests {
         let engine = AdblockEngine::from_rules(rules, false);
 
         let serialized = engine.serialize();
-        assert!(!serialized.is_empty(), "Serialized data should not be empty");
+        assert!(
+            !serialized.is_empty(),
+            "Serialized data should not be empty"
+        );
 
-        let restored = AdblockEngine::deserialize(&serialized)
-            .expect("Deserialization should succeed");
+        let restored =
+            AdblockEngine::deserialize(&serialized).expect("Deserialization should succeed");
 
         // Verify the restored engine works identically
         assert!(restored.should_block(
@@ -290,10 +315,7 @@ mod adblock_engine_tests {
 
     #[test]
     fn test_engine_into_shared_thread_safety() {
-        let rules = vec![
-            "||googletagmanager.com^",
-            "||doubleclick.net^",
-        ];
+        let rules = vec!["||googletagmanager.com^", "||doubleclick.net^"];
         let engine = AdblockEngine::from_rules(rules, false);
         let shared = engine.into_shared();
 
@@ -311,7 +333,10 @@ mod adblock_engine_tests {
             .collect();
 
         for handle in handles {
-            assert!(handle.join().unwrap(), "All threads should detect the block");
+            assert!(
+                handle.join().unwrap(),
+                "All threads should detect the block"
+            );
         }
     }
 

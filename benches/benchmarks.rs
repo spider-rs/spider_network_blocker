@@ -80,25 +80,41 @@ fn bench_trie_prefix_matching(c: &mut Criterion) {
     // --- Embedded trie ---
     group.bench_function("embedded_trie_hits", |b| {
         b.iter(|| {
-            black_box(URL_IGNORE_EMBEDED_TRIE.contains_prefix("https://www.youtube.com/embed/abc123"));
-            black_box(URL_IGNORE_EMBEDED_TRIE.contains_prefix("https://player.vimeo.com/video/12345"));
-            black_box(URL_IGNORE_EMBEDED_TRIE.contains_prefix("https://www.google.com/maps/embed?pb=!1m14"));
+            black_box(
+                URL_IGNORE_EMBEDED_TRIE.contains_prefix("https://www.youtube.com/embed/abc123"),
+            );
+            black_box(
+                URL_IGNORE_EMBEDED_TRIE.contains_prefix("https://player.vimeo.com/video/12345"),
+            );
+            black_box(
+                URL_IGNORE_EMBEDED_TRIE
+                    .contains_prefix("https://www.google.com/maps/embed?pb=!1m14"),
+            );
         })
     });
 
     // --- XHR media trie ---
     group.bench_function("xhr_media_trie_hits", |b| {
         b.iter(|| {
-            black_box(URL_IGNORE_XHR_MEDIA_TRIE.contains_prefix("https://www.youtube.com/s/player/abc"));
-            black_box(URL_IGNORE_XHR_MEDIA_TRIE.contains_prefix("https://api.spotify.com/v1/tracks"));
-            black_box(URL_IGNORE_XHR_MEDIA_TRIE.contains_prefix("https://maps.googleapis.com/maps/api"));
+            black_box(
+                URL_IGNORE_XHR_MEDIA_TRIE.contains_prefix("https://www.youtube.com/s/player/abc"),
+            );
+            black_box(
+                URL_IGNORE_XHR_MEDIA_TRIE.contains_prefix("https://api.spotify.com/v1/tracks"),
+            );
+            black_box(
+                URL_IGNORE_XHR_MEDIA_TRIE.contains_prefix("https://maps.googleapis.com/maps/api"),
+            );
         })
     });
 
     // --- Base path trie ---
     group.bench_function("base_path_trie", |b| {
         b.iter(|| {
-            black_box(URL_IGNORE_SCRIPT_BASE_PATHS.contains_prefix("wp-content/plugins/cookie-law-info/frontend.js"));
+            black_box(
+                URL_IGNORE_SCRIPT_BASE_PATHS
+                    .contains_prefix("wp-content/plugins/cookie-law-info/frontend.js"),
+            );
             black_box(URL_IGNORE_SCRIPT_BASE_PATHS.contains_prefix("analytics/track.js"));
             black_box(URL_IGNORE_SCRIPT_BASE_PATHS.contains_prefix("assets/main.js"));
         })
@@ -111,10 +127,18 @@ fn bench_intercept_detection(c: &mut Criterion) {
     let mut group = c.benchmark_group("intercept_detection");
 
     // Pre-create managers for known domains
-    let amazon_url = url::Url::parse("https://www.amazon.com/dp/B08N5WRWNW").ok().map(Box::new);
-    let reddit_url = url::Url::parse("https://www.reddit.com/r/rust").ok().map(Box::new);
-    let nytimes_url = url::Url::parse("https://www.nytimes.com/section/world").ok().map(Box::new);
-    let unknown_url = url::Url::parse("https://www.example.com/page").ok().map(Box::new);
+    let amazon_url = url::Url::parse("https://www.amazon.com/dp/B08N5WRWNW")
+        .ok()
+        .map(Box::new);
+    let reddit_url = url::Url::parse("https://www.reddit.com/r/rust")
+        .ok()
+        .map(Box::new);
+    let nytimes_url = url::Url::parse("https://www.nytimes.com/section/world")
+        .ok()
+        .map(Box::new);
+    let unknown_url = url::Url::parse("https://www.example.com/page")
+        .ok()
+        .map(Box::new);
 
     let amazon_mgr = NetworkInterceptManager::new(&amazon_url);
     let reddit_mgr = NetworkInterceptManager::new(&reddit_url);
@@ -198,9 +222,21 @@ fn bench_adblock_engine(c: &mut Criterion) {
     let engine = AdblockEngine::from_rules(rules, false);
 
     let hit_urls = [
-        ("https://www.googletagmanager.com/gtm.js", "https://example.com", "script"),
-        ("https://www.google-analytics.com/analytics.js", "https://example.com", "script"),
-        ("https://googleads.g.doubleclick.net/pagead/id", "https://example.com", "script"),
+        (
+            "https://www.googletagmanager.com/gtm.js",
+            "https://example.com",
+            "script",
+        ),
+        (
+            "https://www.google-analytics.com/analytics.js",
+            "https://example.com",
+            "script",
+        ),
+        (
+            "https://googleads.g.doubleclick.net/pagead/id",
+            "https://example.com",
+            "script",
+        ),
     ];
 
     group.bench_function("engine_check_hits", |b| {
@@ -212,9 +248,21 @@ fn bench_adblock_engine(c: &mut Criterion) {
     });
 
     let miss_urls = [
-        ("https://cdn.example.com/app.js", "https://example.com", "script"),
-        ("https://api.stripe.com/v1/charges", "https://example.com", "xhr"),
-        ("https://fonts.googleapis.com/css2", "https://example.com", "stylesheet"),
+        (
+            "https://cdn.example.com/app.js",
+            "https://example.com",
+            "script",
+        ),
+        (
+            "https://api.stripe.com/v1/charges",
+            "https://example.com",
+            "xhr",
+        ),
+        (
+            "https://fonts.googleapis.com/css2",
+            "https://example.com",
+            "stylesheet",
+        ),
     ];
 
     group.bench_function("engine_check_misses", |b| {
@@ -229,7 +277,11 @@ fn bench_adblock_engine(c: &mut Criterion) {
 }
 
 #[cfg(not(feature = "adblock"))]
-criterion_group!(benches, bench_trie_prefix_matching, bench_intercept_detection);
+criterion_group!(
+    benches,
+    bench_trie_prefix_matching,
+    bench_intercept_detection
+);
 
 #[cfg(feature = "adblock")]
 criterion_group!(

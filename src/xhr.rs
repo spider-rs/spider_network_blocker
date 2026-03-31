@@ -11,7 +11,7 @@ pub static URL_IGNORE_XHR_MEDIA_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://open.spotify.com/",
         "https://api.spotify.com/v1/",
         "https://music.apple.com/",
-        "https://maps.googleapis.com/"
+        "https://maps.googleapis.com/",
     ];
     for pattern in &patterns {
         trie.insert(pattern);
@@ -163,6 +163,8 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://prodregistryv2.org/v1/",
         "https://dpm.demdex.net/",
         "https://router.parklogic.com/",
+        "https://app.carnow.com/dealers/visitor_info?",
+        "https://app.carnow.com/dealers/track_visitor",
         "https://monorail-edge.shopifysvc.com/unstable/produce_batch",
         "https://monorail-edge.shopifysvc.com/v1/produce",
         "https://cloudflareinsights.com/cdn-cgi/rum",
@@ -193,7 +195,9 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         ".ingest.us.sentry.io/",
         "/analytics",
         "/tracking",
-        "/track"
+        "/track",
+        "/track_visitor",
+        "/track-visitor",
     ];
     for pattern in &patterns {
         trie.insert(pattern);
