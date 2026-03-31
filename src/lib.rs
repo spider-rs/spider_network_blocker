@@ -1,5 +1,7 @@
 /// Adblock patterns.
 pub mod adblock;
+/// Lock-free dynamic block list for runtime seeding.
+pub mod dynamic_blocklist;
 /// interception manager
 pub mod intercept_manager;
 /// Scripts to block;

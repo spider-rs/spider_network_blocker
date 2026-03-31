@@ -1,6 +1,6 @@
 [package]
 name = "spider_network_blocker"
-version = "0.0.65"
+version = "0.0.66"
 authors = [
     "j-mendez <jeff@spider.cloud>"
 ]
@@ -15,6 +15,7 @@ edition = "2021"
 
 [dependencies]
 hashbrown = { version = "0.15", optional = true }
+arc-swap = "1"
 url = "2"
 serde = { version = "1", features = ["derive"] }
 phf = { version = "0.11", features = ["macros"] }
