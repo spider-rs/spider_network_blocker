@@ -33,52 +33,82 @@ impl Layers {
 
 /// A lock-free, dynamically updatable block list backed by layered [`Trie`]s.
 ///
-/// Reads are wait-free (atomic pointer load). `extend` builds a small trie
-/// from only the new patterns and appends it as a layer — no cloning of
-/// existing data. `compact` merges all layers into one when you want to
-/// reclaim the overhead of multiple layers.
+/// Can optionally wrap an existing static `&Trie` (e.g. `URL_IGNORE_TRIE`)
+/// as a base that is always checked first. Runtime patterns are added as
+/// layers on top — `extend` never clones existing data.
+///
+/// Reads are wait-free (atomic pointer load). Writers build off the hot path
+/// and atomically swap in the new layer set.
 pub struct DynamicBlockList {
+    base: Option<&'static Trie>,
     layers: ArcSwap<Layers>,
 }
 
 impl DynamicBlockList {
-    /// Create an empty dynamic block list.
+    /// Create an empty dynamic block list with no base trie.
     pub fn new() -> Self {
         Self {
+            base: None,
             layers: ArcSwap::from_pointee(Layers::default()),
         }
     }
 
-    /// Create a dynamic block list pre-seeded with `patterns`.
+    /// Wrap an existing static trie as the base layer.
+    ///
+    /// The base is always checked first and is never affected by `seed`,
+    /// `swap`, `extend`, or `compact` — those only operate on dynamic layers.
+    ///
+    /// ```rust,ignore
+    /// use spider_network_blocker::scripts::URL_IGNORE_TRIE;
+    /// use spider_network_blocker::dynamic_blocklist::DynamicBlockList;
+    ///
+    /// let blocklist = DynamicBlockList::with_base(&URL_IGNORE_TRIE);
+    /// blocklist.extend(["https://my-custom-tracker.com/"]);
+    ///
+    /// // Checks the static trie first, then dynamic layers
+    /// blocklist.is_blocked("https://www.google-analytics.com/analytics.js"); // true (from base)
+    /// blocklist.is_blocked("https://my-custom-tracker.com/pixel");           // true (from extend)
+    /// ```
+    pub fn with_base(base: &'static Trie) -> Self {
+        Self {
+            base: Some(base),
+            layers: ArcSwap::from_pointee(Layers::default()),
+        }
+    }
+
+    /// Create a dynamic block list pre-seeded with `patterns` and no base trie.
     pub fn from_patterns<'a>(patterns: impl IntoIterator<Item = &'a str>) -> Self {
         let mut trie = Trie::new();
         for p in patterns {
             trie.insert(p);
         }
         Self {
+            base: None,
             layers: ArcSwap::from_pointee(Layers::with_trie(trie)),
         }
     }
 
-    /// Lock-free check — returns `true` if `url` matches any prefix in any
-    /// layer of the current snapshot.
+    /// Lock-free check — returns `true` if `url` matches any prefix in the
+    /// base trie or any dynamic layer.
     #[inline]
     pub fn is_blocked(&self, url: &str) -> bool {
+        if let Some(base) = self.base {
+            if base.contains_prefix(url) {
+                return true;
+            }
+        }
         self.layers.load().contains_prefix(url)
     }
 
-    /// Atomically replace all layers with a single `new_trie`.
-    ///
-    /// In-flight readers keep using the old snapshot; new readers see
-    /// `new_trie` immediately.
+    /// Atomically replace all dynamic layers with a single `new_trie`.
+    /// The base trie (if any) is unaffected.
     pub fn swap(&self, new_trie: Trie) {
         self.layers
             .store(Arc::new(Layers::with_trie(new_trie)));
     }
 
-    /// Replace all layers with a single trie built from `patterns`.
-    ///
-    /// Builds the trie first, then swaps — the hot path is never blocked.
+    /// Replace all dynamic layers with a single trie built from `patterns`.
+    /// The base trie (if any) is unaffected.
     pub fn seed<'a>(&self, patterns: impl IntoIterator<Item = &'a str>) {
         let mut trie = Trie::new();
         for p in patterns {
@@ -92,8 +122,6 @@ impl DynamicBlockList {
     ///
     /// Builds a small trie from only the new patterns and appends it as a new
     /// layer. Existing layers are shared via `Arc` — zero copying.
-    /// Concurrent `extend` calls may race (last writer wins on the layer list)
-    /// which is fine for additive seeding.
     pub fn extend<'a>(&self, patterns: impl IntoIterator<Item = &'a str>) {
         let mut trie = Trie::new();
         for p in patterns {
@@ -107,10 +135,8 @@ impl DynamicBlockList {
         self.layers.store(Arc::new(new_layers));
     }
 
-    /// Merge all layers into a single trie to reclaim per-layer lookup overhead.
-    ///
-    /// Call this periodically after many `extend` calls. Reads remain lock-free
-    /// throughout — the compacted trie is swapped in atomically.
+    /// Merge all dynamic layers into a single trie.
+    /// The base trie (if any) is unaffected.
     pub fn compact(&self) {
         let current = self.layers.load();
         if current.len() <= 1 {
@@ -124,7 +150,7 @@ impl DynamicBlockList {
             .store(Arc::new(Layers::with_trie(merged)));
     }
 
-    /// Number of trie layers. Useful for deciding when to `compact`.
+    /// Number of dynamic trie layers (excludes the base).
     pub fn layer_count(&self) -> usize {
         self.layers.load().len()
     }
@@ -176,6 +202,74 @@ mod tests {
     }
 
     #[test]
+    fn test_with_base_checks_static_trie() {
+        // Simulate a static trie
+        static BASE: LazyLock<Trie> = LazyLock::new(|| {
+            let mut t = Trie::new();
+            t.insert("https://static-blocked.example.com/");
+            t
+        });
+
+        let bl = DynamicBlockList::with_base(&BASE);
+
+        // Base pattern is blocked
+        assert!(bl.is_blocked("https://static-blocked.example.com/x"));
+        // Unknown is not
+        assert!(!bl.is_blocked("https://cdn.example.com/x"));
+    }
+
+    #[test]
+    fn test_with_base_plus_extend() {
+        static BASE: LazyLock<Trie> = LazyLock::new(|| {
+            let mut t = Trie::new();
+            t.insert("https://static-blocked.example.com/");
+            t
+        });
+
+        let bl = DynamicBlockList::with_base(&BASE);
+        bl.extend(["https://dynamic-blocked.example.com/"]);
+
+        // Both base and dynamic patterns are blocked
+        assert!(bl.is_blocked("https://static-blocked.example.com/x"));
+        assert!(bl.is_blocked("https://dynamic-blocked.example.com/x"));
+        assert!(!bl.is_blocked("https://cdn.example.com/x"));
+    }
+
+    #[test]
+    fn test_seed_does_not_affect_base() {
+        static BASE: LazyLock<Trie> = LazyLock::new(|| {
+            let mut t = Trie::new();
+            t.insert("https://static-blocked.example.com/");
+            t
+        });
+
+        let bl = DynamicBlockList::with_base(&BASE);
+        bl.extend(["https://old-dynamic.example.com/"]);
+
+        // Seed replaces dynamic layers but not the base
+        bl.seed(["https://new-dynamic.example.com/"]);
+
+        assert!(bl.is_blocked("https://static-blocked.example.com/x")); // base intact
+        assert!(bl.is_blocked("https://new-dynamic.example.com/x")); // new seed
+        assert!(!bl.is_blocked("https://old-dynamic.example.com/x")); // old dynamic gone
+    }
+
+    #[test]
+    fn test_with_real_static_trie() {
+        use crate::scripts::URL_IGNORE_TRIE;
+
+        let bl = DynamicBlockList::with_base(&URL_IGNORE_TRIE);
+        bl.extend(["https://my-custom-tracker.example.com/"]);
+
+        // Static patterns still work
+        assert!(bl.is_blocked("https://www.google-analytics.com/analytics.js"));
+        // Dynamic extension works
+        assert!(bl.is_blocked("https://my-custom-tracker.example.com/pixel"));
+        // Legitimate URLs still pass
+        assert!(!bl.is_blocked("https://cdn.example.com/app.js"));
+    }
+
+    #[test]
     fn test_seed_replaces() {
         let bl = DynamicBlockList::from_patterns(["https://old.example.com/"]);
         assert!(bl.is_blocked("https://old.example.com/x"));
@@ -193,7 +287,6 @@ mod tests {
         bl.extend(["https://tracker.example.com/"]);
         assert_eq!(bl.layer_count(), 2);
 
-        // Both layers are checked
         assert!(bl.is_blocked("https://ads.example.com/banner.js"));
         assert!(bl.is_blocked("https://tracker.example.com/pixel"));
         assert!(!bl.is_blocked("https://cdn.example.com/app.js"));
@@ -223,7 +316,6 @@ mod tests {
         bl.compact();
         assert_eq!(bl.layer_count(), 1);
 
-        // All patterns still present after compaction
         assert!(bl.is_blocked("https://ads.example.com/x"));
         assert!(bl.is_blocked("https://tracker.example.com/x"));
         assert!(bl.is_blocked("https://analytics.example.com/x"));
@@ -233,7 +325,7 @@ mod tests {
     #[test]
     fn test_compact_noop_single_layer() {
         let bl = DynamicBlockList::from_patterns(["https://ads.example.com/"]);
-        bl.compact(); // should be a no-op
+        bl.compact();
         assert_eq!(bl.layer_count(), 1);
         assert!(bl.is_blocked("https://ads.example.com/x"));
     }
@@ -264,15 +356,15 @@ mod tests {
             })
             .collect();
 
-        // Extend while reads are in flight
         bl.extend(["https://new.example.com/"]);
 
         for h in handles {
             let _ = h.join().unwrap();
         }
 
-        // After extend, both old and new patterns are visible
         assert!(bl.is_blocked("https://ads.example.com/x"));
         assert!(bl.is_blocked("https://new.example.com/x"));
     }
+
+    use std::sync::LazyLock;
 }
