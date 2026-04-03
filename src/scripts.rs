@@ -114,6 +114,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://cdn.quantummetric.com/qscripts/",
         "https://wix-engage-visitors-prod-13.firebaseio.com/",
         "https://c.amazon-adsystem.com/aax2/apstag.js",
+        "https://servedbyadbutler.com/",
         "https://www.clarity.ms/tag/",
         "https://cdn.callrail.com/companies/",
         "https://tru.am/scripts/custom/",
