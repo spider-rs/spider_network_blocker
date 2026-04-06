@@ -174,6 +174,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://js-agent.newrelic.com/",
         "https://bat.bing.com/bat.js",
         "https://p.yotpo.com/i?",
+        "https://usage.trackjs.com/",
         "https://shopify-init.blackcrow.ai/",
         "https://js.adsrvr.org/up_loader.1.1.0.js",
         "https://t.cfjump.com/tag/",
