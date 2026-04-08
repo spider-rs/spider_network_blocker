@@ -263,6 +263,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://public.servenobid.com/partner/",
         "https://sb.scorecardresearch.com/",
         "https://cdn.pdst.fm/ping.min.js",
+        "https://resources.infolinks.com/js/infolinks_main.js",
         "https://www.clarity.ms/tag/shopify/",
         "https://static.klaviyo.com/onsite/js/",
         "https://a.klaviyo.com/media/js/",
