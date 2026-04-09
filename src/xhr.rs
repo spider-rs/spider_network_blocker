@@ -165,6 +165,7 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://vision.fn-pz.com/v3/",
         "https://prodregistryv2.org/v1/",
         "https://dpm.demdex.net/",
+        "https://c.popmenu.com/com.snowplowanalytics.snowplow/tp2",
         "https://router.parklogic.com/",
         "https://app.carnow.com/dealers/visitor_info?",
         "https://app.carnow.com/dealers/track_visitor",

@@ -103,8 +103,7 @@ impl DynamicBlockList {
     /// Atomically replace all dynamic layers with a single `new_trie`.
     /// The base trie (if any) is unaffected.
     pub fn swap(&self, new_trie: Trie) {
-        self.layers
-            .store(Arc::new(Layers::with_trie(new_trie)));
+        self.layers.store(Arc::new(Layers::with_trie(new_trie)));
     }
 
     /// Replace all dynamic layers with a single trie built from `patterns`.
@@ -114,8 +113,7 @@ impl DynamicBlockList {
         for p in patterns {
             trie.insert(p);
         }
-        self.layers
-            .store(Arc::new(Layers::with_trie(trie)));
+        self.layers.store(Arc::new(Layers::with_trie(trie)));
     }
 
     /// Extend the block list with additional patterns — lock-free, no cloning.
@@ -146,8 +144,7 @@ impl DynamicBlockList {
         for trie in &current.tries {
             collect_into(trie, &mut merged);
         }
-        self.layers
-            .store(Arc::new(Layers::with_trie(merged)));
+        self.layers.store(Arc::new(Layers::with_trie(merged)));
     }
 
     /// Number of dynamic trie layers (excludes the base).

@@ -622,9 +622,9 @@ dependencies = [
 
 [[package]]
 name = "psl"
-version = "2.1.200"
+version = "2.1.201"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aeecfb788a39437717879e1055237308caaa520a0041bb9536899dff28bf24a6"
+checksum = "ffebce17cdf2466ec6802e98d089d397d16578916162101eada345390be6f66b"
 dependencies = [
  "psl-types",
 ]
@@ -807,7 +807,7 @@ checksum = "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03"
 
 [[package]]
 name = "spider_network_blocker"
-version = "0.0.71"
+version = "0.0.72"
 dependencies = [
  "adblock",
  "arc-swap",
