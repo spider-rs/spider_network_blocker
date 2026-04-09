@@ -39,6 +39,7 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://collect.tealiumiq.com/",
         "https://adobedc.demdex.net/",
         "https://cdn.acsbapp.com/config/",
+        "https://lma.npaw.com/data?",
         "https://api-iam.intercom.io/messenger/web/metrics",
         "https://s.yimg.com/wi",
         "https://collector-pxj770cp7y.px-cloud.net/api/v2/collector",
