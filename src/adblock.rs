@@ -72,6 +72,11 @@ pub mod engine {
     }
 
     impl AdblockEngine {
+        /// Wrap a pre-built `adblock::Engine`.
+        pub fn from_engine(engine: adblock::Engine) -> Self {
+            Self { inner: engine }
+        }
+
         /// Build an engine from raw ABP/uBO filter rules.
         pub fn from_rules<I, S>(rules: I, debug: bool) -> Self
         where
@@ -134,4 +139,42 @@ pub mod engine {
             Arc::new(self)
         }
     }
+}
+
+/// Global adblock engine with EasyList + EasyPrivacy embedded at build time.
+///
+/// Available only when the `adblock_easylist` feature is enabled.
+/// Falls back to `ADBLOCK_PATTERNS` if the filter lists failed to download.
+#[cfg(feature = "adblock_easylist")]
+pub mod easylist_engine {
+    use std::sync::LazyLock;
+
+    static EASYLIST: &str = include_str!(concat!(env!("OUT_DIR"), "/easylist.txt"));
+    static EASYPRIVACY: &str = include_str!(concat!(env!("OUT_DIR"), "/easyprivacy.txt"));
+
+    /// Global adblock engine initialized once with EasyList + EasyPrivacy + built-in patterns.
+    pub static ADBLOCK_ENGINE: LazyLock<super::engine::AdblockEngine> = LazyLock::new(|| {
+        use adblock::lists::{FilterSet, ParseOptions, RuleTypes};
+
+        let mut filter_set = FilterSet::new(false);
+        let mut opts = ParseOptions::default();
+        opts.rule_types = RuleTypes::All;
+
+        // Built-in patterns.
+        filter_set.add_filters(
+            &*super::ADBLOCK_PATTERNS,
+            opts.clone(),
+        );
+
+        // EasyList + EasyPrivacy (embedded at build time).
+        if !EASYLIST.is_empty() {
+            filter_set.add_filter_list(EASYLIST, opts.clone());
+        }
+        if !EASYPRIVACY.is_empty() {
+            filter_set.add_filter_list(EASYPRIVACY, opts);
+        }
+
+        let engine = adblock::Engine::from_filter_set(filter_set, true);
+        super::engine::AdblockEngine::from_engine(engine)
+    });
 }

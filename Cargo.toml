@@ -1,6 +1,6 @@
 [package]
 name = "spider_network_blocker"
-version = "0.0.74"
+version = "0.0.75"
 authors = [
     "j-mendez <jeff@spider.cloud>"
 ]
@@ -25,6 +25,7 @@ adblock = { version = "0.12", optional = true, default-features = false, feature
 phf = { version = "0.11", default-features = false }
 phf_codegen = "0.11"
 convert_case = "0.8"
+native-tls = { version = "0.2", optional = true }
 
 [dev-dependencies]
 criterion = { version = "0.5", features = ["html_reports"] }
@@ -33,6 +34,7 @@ criterion = { version = "0.5", features = ["html_reports"] }
 default = ["hashbrown"]
 hashbrown = ["dep:hashbrown"]
 adblock = ["dep:adblock"]
+adblock_easylist = ["adblock", "dep:native-tls"]
 
 [[bench]]
 name = "benchmarks"
