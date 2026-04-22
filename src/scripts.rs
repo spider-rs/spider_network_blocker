@@ -298,6 +298,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://c.webtrends-optimize.com/acs/accounts/",
         "https://cmp.inmobi.com/choice/",
         "https://p11.techlab-cdn.com/",
+        "https://us-assets.i.posthog.com/",
         "/scripts/matomo/",
         "/js/exponea.min.js",
         "/eBootsStorefrontAssetStore/javascript/Analytics.js",
@@ -327,6 +328,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         ".airship.com",
         ".adlightning.com",
         ".lab.amplitude.",
+        ".posthog.com",
         // explicit ignore tracking.js and ad files
         "privacy-notice.js",
         "cookie_consent.js",
