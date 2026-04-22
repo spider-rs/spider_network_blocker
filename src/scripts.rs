@@ -200,8 +200,10 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://static.cloudflareinsights.com/beacon.min.js/",
         "https://hm.baidu.com/",
         "https://cdn.wootric.com/wootric-sdk.js",
-        "https://storage.googleapis.com/lr-marketing-js/lr-web-analytics/",
-        "https://relay.lr-wa.com/",
+        // LogRocket first-party analytics infra — blocking these breaks
+        // logrocket.com's own pages (client-side exception on hydration).
+        // "https://storage.googleapis.com/lr-marketing-js/lr-web-analytics/",
+        // "https://relay.lr-wa.com/",
         "https://unpkg.zhimg.com/@efe/zhad-tracker",
         "https://tracking.g2crowd.com/attribution_tracking/",
         "https://snap.licdn.com/",
