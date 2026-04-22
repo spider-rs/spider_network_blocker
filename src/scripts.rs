@@ -52,6 +52,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://tools.luckyorange.com/",
         "https://cdn.piano.io",
         "https://px.ads.linkedin.com",
+        "https://px4.ads.linkedin.com",
         "https://cdn.sift.com/s.js",
         "https://connect.facebook.net",
         "https://tags.tiqcdn.com",
@@ -176,7 +177,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://cdn.registerdisney.go.com/v4/OneID.js",
         "https://u5.investingchannel.com/static/uat.js",
         "https://js-agent.newrelic.com/",
-        "https://bat.bing.com/bat.js",
+        "https://bat.bing.com/",
         "https://scripts.webcontentassessor.com/",
         "https://container.pepperjam.com/",
         "https://p.cquotient.com/pebble?",
@@ -192,14 +193,19 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://consent.trustarc.com/",
         "https://cdn-sitegainer.com/",
         "https://yob9p0yb4y.kameleoon.eu/",
-        "https://j.6sc.co/6si.min.js",
+        "https://j.6sc.co/",
+        "https://b.6sc.co/",
+        "https://c.6sc.co/",
+        "https://ipv6.6sc.co/",
+        "https://epsilon.6sense.com/",
         "https://x.clearbitjs.com/v2/",
         "https://api.clerk.io/v2/log/",
         "https://cdn.noibu.com/",
         "https://us1.discourse-cdn.com/cursor1/assets/plugins/discourse-adplugin",
         "https://static.cloudflareinsights.com/beacon.min.js/",
         "https://hm.baidu.com/",
-        "https://cdn.wootric.com/wootric-sdk.js",
+        "https://cdn.wootric.com/",
+        "https://eligibility.wootric.com/",
         // LogRocket first-party analytics infra — blocking these breaks
         // logrocket.com's own pages (client-side exception on hydration).
         // "https://storage.googleapis.com/lr-marketing-js/lr-web-analytics/",
@@ -279,7 +285,8 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://resources.infolinks.com/js/infolinks_main.js",
         "https://www.clarity.ms/tag/shopify/",
         "https://btloader.com/tag?",
-        "https://api.factors.ai/sdk/event/track",
+        "https://api.factors.ai",
+        "https://app.factors.ai",
         "https://static.klaviyo.com/onsite/js/",
         "https://a.klaviyo.com/media/js/",
         "https://cdn.intelligems.io/esm/",
@@ -379,6 +386,16 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://tracking.",
         "http://tracking.",
         "https://static-tracking.",
+        // ChiliPiper meeting widget embedded as CNAMEd subdomain (observed
+        // at logrocket.chilipiper.com — not first-party content).
+        "https://logrocket.chilipiper.com",
+        // Twitter/X conversion pixel. Narrow to `/adsct` + `/1/i/adsct` so
+        // legitimate `t.co/...` link-shortener redirects still resolve.
+        "https://t.co/i/adsct",
+        "https://t.co/1/i/adsct",
+        // Google Ads 1p-conversion / 1p-user-list pixel paths. Scoped to the
+        // `/pagead/` path so regular google.com search/service URLs pass.
+        "https://www.google.com/pagead/",
         // exp testin
         // used for possible location outside
         // "https://www.recaptcha.net/recaptcha/",
