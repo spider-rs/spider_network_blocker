@@ -1,6 +1,6 @@
 [package]
 name = "spider_network_blocker"
-version = "0.0.76"
+version = "0.0.78"
 authors = [
     "j-mendez <jeff@spider.cloud>"
 ]
@@ -14,21 +14,21 @@ documentation = "https://docs.rs/spider_network_blocker"
 edition = "2021"
 
 [dependencies]
-hashbrown = { version = "0.15", optional = true }
+hashbrown = { version = "0.17", optional = true }
 arc-swap = "1"
 url = "2"
 serde = { version = "1", features = ["derive"] }
-phf = { version = "0.11", features = ["macros"] }
+phf = { version = "0.13", features = ["macros"] }
 adblock = { version = "0.12", optional = true, default-features = false, features = ["embedded-domain-resolver", "full-regex-handling"] }
 
 [build-dependencies]
-phf = { version = "0.11", default-features = false }
-phf_codegen = "0.11"
-convert_case = "0.8"
+phf = { version = "0.13", default-features = false }
+phf_codegen = "0.13"
+convert_case = "0.11"
 native-tls = { version = "0.2", optional = true }
 
 [dev-dependencies]
-criterion = { version = "0.5", features = ["html_reports"] }
+criterion = { version = "0.8", features = ["html_reports"] }
 
 [features]
 default = ["hashbrown"]

@@ -43,6 +43,7 @@ fn generate_domain_map(domain_map_path: &Path, pattern_dir: &str) {
     writeln!(&mut file, "pub enum NetworkInterceptManager {{").unwrap();
 
     let mut domain_variants = vec![];
+    let mut map_entries: Vec<(String, String)> = vec![];
 
     for entry in fs::read_dir(pattern_dir).unwrap() {
         let entry = entry.unwrap();
@@ -52,11 +53,15 @@ fn generate_domain_map(domain_map_path: &Path, pattern_dir: &str) {
             let enum_name = format_ident(domain_name).to_case(Case::UpperCamel);
             writeln!(&mut file, "    {},", enum_name).unwrap();
             domain_variants.push((domain_name.to_string(), enum_name.clone()));
-            map.entry(
-                format!("{}", domain_name),
-                &format!("NetworkInterceptManager::{}", enum_name),
-            );
+            map_entries.push((
+                domain_name.to_string(),
+                format!("NetworkInterceptManager::{}", enum_name),
+            ));
         }
+    }
+
+    for (key, value) in &map_entries {
+        map.entry(key.clone(), value);
     }
 
     writeln!(&mut file, "    #[default]\n    Unknown,").unwrap(); // Default case
