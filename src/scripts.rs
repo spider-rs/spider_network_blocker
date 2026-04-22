@@ -123,7 +123,6 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://c.amazon-adsystem.com/aax2/apstag.js",
         "https://servedbyadbutler.com/",
         "https://www.clarity.ms/tag/",
-        "https://cdn.callrail.com/companies/",
         "https://tru.am/scripts/custom/",
         "https://js.zi-scripts.com/zi-tag.js",
         "https://tag.getamigo.io/js/",
@@ -176,8 +175,6 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://cdn.registerdisney.go.com/v4/responder.js",
         "https://cdn.registerdisney.go.com/v4/OneID.js",
         "https://u5.investingchannel.com/static/uat.js",
-        "https://diffuser-cdn.app-us1.com/diffuser/diffuser.js",
-        "https://www.clarity.ms/tag/",
         "https://js-agent.newrelic.com/",
         "https://bat.bing.com/bat.js",
         "https://scripts.webcontentassessor.com/",
@@ -292,7 +289,6 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://assets.trendii.com/pixel/main.js",
         "https://micro.rubiconproject.com/prebid/",
         "https://player.anyclip.com/anyclip-widget/",
-        "https://tag.wknd.ai/",
         "https://try.abtasty.com/",
         "https://tags.tiqcdn.com/utag/",
         "https://assets.squarespace.com/universal/scripts-compressed/performance-",
@@ -373,6 +369,7 @@ pub static URL_IGNORE_TRIE: LazyLock<Trie> = LazyLock::new(|| {
     for pattern in &patterns {
         trie.insert(pattern);
     }
+    trie.shrink_to_fit();
     trie
 });
 
@@ -414,7 +411,6 @@ pub static URL_IGNORE_EMBEDED_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://secure.livechatinc.com/customer/action/open_chat", // chat
         "setup-intercom-monitoring.js",
         "setup-sentry.js",
-        "setup-intercom-monitoring.js",
         "cast_sender.js",
         // "https://www.youtube.com/s/player/", // Youtube player not needed usually since iframe_api is used mainly
         // vercel live
@@ -474,6 +470,7 @@ pub static URL_IGNORE_EMBEDED_TRIE: LazyLock<Trie> = LazyLock::new(|| {
     for pattern in &patterns {
         trie.insert(pattern);
     }
+    trie.shrink_to_fit();
     trie
 });
 
@@ -492,6 +489,7 @@ pub static URL_IGNORE_SCRIPT_BASE_PATHS: LazyLock<Trie> = LazyLock::new(|| {
     for pattern in &patterns {
         trie.insert(pattern);
     }
+    trie.shrink_to_fit();
     trie
 });
 
@@ -516,6 +514,7 @@ pub static URL_IGNORE_SCRIPT_STYLES_PATHS: LazyLock<Trie> = LazyLock::new(|| {
     for pattern in &patterns {
         trie.insert(pattern);
     }
+    trie.shrink_to_fit();
     trie
 });
 
@@ -532,6 +531,7 @@ pub static URL_IGNORE_CSS: LazyLock<Trie> = LazyLock::new(|| {
     for pattern in &patterns {
         trie.insert(pattern);
     }
+    trie.shrink_to_fit();
     trie
 });
 
@@ -559,6 +559,7 @@ pub static URL_IGNORE_TRIE_PATHS: LazyLock<Trie> = LazyLock::new(|| {
     for pattern in &patterns {
         trie.insert(pattern);
     }
+    trie.shrink_to_fit();
     trie
 });
 

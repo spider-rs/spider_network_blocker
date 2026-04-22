@@ -16,6 +16,7 @@ pub static URL_IGNORE_XHR_MEDIA_TRIE: LazyLock<Trie> = LazyLock::new(|| {
     for pattern in &patterns {
         trie.insert(pattern);
     }
+    trie.shrink_to_fit();
     trie
 });
 
@@ -179,7 +180,6 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         "https://maps.googleapis.com/maps/api/mapsjs/",
         "https://api.sprig.com/sdk/",
         "https://insights-collector.newrelic.com/",
-        "https://error-analytics-sessions-production.shopifysvc.com/",
         "https://www.google.com/ccm/collect?",
         "https://na.groupondata.com/trest",
         ".zendesk.com/frontendevents/",
@@ -211,6 +211,7 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
     for pattern in &patterns {
         trie.insert(pattern);
     }
+    trie.shrink_to_fit();
     trie
 });
 

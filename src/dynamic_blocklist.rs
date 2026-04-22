@@ -10,7 +10,10 @@ struct Layers {
 }
 
 impl Layers {
-    fn with_trie(trie: Trie) -> Self {
+    fn with_trie(mut trie: Trie) -> Self {
+        // Freeze here so every layer reader hits the packed fast path and
+        // we never hold a Vec-form trie behind an `Arc`.
+        trie.shrink_to_fit();
         Self {
             tries: vec![Arc::new(trie)],
         }
@@ -161,20 +164,11 @@ impl Default for DynamicBlockList {
 
 /// Walk `source` and re-insert every stored word into `dest`.
 fn collect_into(source: &Trie, dest: &mut Trie) {
-    let mut stack: Vec<(&crate::trie::TrieNode, Vec<u8>)> = vec![(&source.root, Vec::new())];
-
-    while let Some((node, prefix)) = stack.pop() {
-        if node.is_end_of_word {
-            if let Ok(word) = std::str::from_utf8(&prefix) {
-                dest.insert(word);
-            }
+    source.for_each_word(|bytes| {
+        if let Ok(word) = std::str::from_utf8(bytes) {
+            dest.insert(word);
         }
-        for (&byte, child) in &node.children {
-            let mut next_prefix = prefix.clone();
-            next_prefix.push(byte);
-            stack.push((child, next_prefix));
-        }
-    }
+    });
 }
 
 #[cfg(test)]
