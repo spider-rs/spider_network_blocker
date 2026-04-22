@@ -161,10 +161,7 @@ pub mod easylist_engine {
         opts.rule_types = RuleTypes::All;
 
         // Built-in patterns.
-        filter_set.add_filters(
-            &*super::ADBLOCK_PATTERNS,
-            opts.clone(),
-        );
+        filter_set.add_filters(&*super::ADBLOCK_PATTERNS, opts.clone());
 
         // EasyList + EasyPrivacy (embedded at build time).
         if !EASYLIST.is_empty() {
