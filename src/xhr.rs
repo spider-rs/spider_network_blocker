@@ -213,6 +213,7 @@ pub static URL_IGNORE_XHR_TRIE: LazyLock<Trie> = LazyLock::new(|| {
         ".onetrust.",
         "https://logs.",
         "/track.php",
+        "/logger.php",
         "/cookieconsentpub/v1/geo/location",
         "/api/v1/bulklog",
         "cookieconsentpub",
